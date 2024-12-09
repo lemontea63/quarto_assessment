@@ -5,7 +5,8 @@ editor: source
 ---
 
 #Introduction
-This analysis aims to assess the impact of drought on beak morphology in the medium ground finch (Geospiza fortis), found in the Galapagos islands. Beak morphology is intricately linked to food availability, with beaks adapting to certain sets of food sources which are available within the niche of a certain species. Freak events like droughts or floods create large selection pressures which act on beak morphology as they impact food availability; these sorts of events may prevent many plant species which are not tolerant to stresses from setting seed, or some plants may even die which will limit food availability in a particular year. To overcome these selection pressures, animals such as birds will evolve to become better adapted to the changed environment, for example by evolving larger, tougher beaks which can take advantage of remaining food sources.
+This analysis aims to assess the impact of drought on beak morphology in the medium ground finch (Geospiza fortis), found in the Galapagos islands. 
+Beak morphology is intricately linked to food availability, with beaks adapting to certain sets of food sources which are available within the niche of a certain species. Freak events like droughts or floods create large selection pressures which act on beak morphology as they impact food availability; these sorts of events may prevent many plant species which are not tolerant to stresses from setting seed, or some plants may even die which will limit food availability in a particular year. To overcome these selection pressures, animals such as birds will evolve to become better adapted to the changed environment, for example by evolving larger, tougher beaks which can take advantage of remaining food sources.
 
 ```{r}
 #Loading packages needed for this analysis.

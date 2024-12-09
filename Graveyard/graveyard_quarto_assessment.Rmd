@@ -10,3 +10,5 @@ cleaning_finch_data <- function(raw_data){
 finches_grouped <- cleaning_finch_data(finches_raw)
  
 head(finches_grouped)
+
+#Sorting code

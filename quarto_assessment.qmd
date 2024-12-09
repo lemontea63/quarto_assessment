@@ -40,9 +40,12 @@ log_depth <- log10(finches_raw$Depth)
 ggplot(data = finches_raw, aes(x = log_depth)) + geom_histogram()
 sqrt_depth <- sqrt(finches_raw$Depth)
 ggplot(data = finches_raw, aes(x = sqrt_depth)) + geom_histogram()
+
+#Setting own colours for each year.
+year_colours <- c("1976" = "magenta2", "1978" = "darkorange")
          
 #Plotting boxplot to see what data look like...
-finches_exploratory_figure <- ggplot(data = finches_raw, aes(x=Year, y=Depth, group = Year)) + geom_boxplot(aes(color = Year)) + geom_jitter(aes(color = Year), alpha = 0.3, position = position_jitter(width = 0.2, seed=0)) + labs (x= "Year", y = "Depth (cm)")
+finches_exploratory_figure <- ggplot(data = finches_raw, aes(x=Year, y=Depth, group = Year)) + geom_boxplot(aes(color = Year)) + geom_jitter(aes(color = Year), alpha = 0.3, position = position_jitter(width = 0.2, seed=0)) + labs (x= "Year", y = "Depth (cm)") + scale_colour_manual(values = year_colours)
 finches_exploratory_figure
 
 ```
@@ -83,7 +86,7 @@ print(finch_analysed)
 
 ```{r}
 
-finches_results_figure <- ggplot(data = finches_raw, aes(x=Year, y=Depth, group = Year)) + geom_boxplot(aes(color = Year)) + geom_jitter(aes(color = Year), alpha = 0.3, position = position_jitter(width = 0.2, seed=0)) + labs (x= "Year", y = "Depth (cm)") + geom_text(data = finch_analysed, aes(x=Year, y= quant, label = cld), size = 5, vjust = -1, hjust = -6)
+finches_results_figure <- ggplot(data = finches_raw, aes(x=Year, y=Depth, group = Year)) + geom_boxplot(aes(color = Year)) + geom_jitter(aes(color = Year), alpha = 0.3, position = position_jitter(width = 0.2, seed=0)) + labs (x= "Year", y = "Depth (cm)") + scale_colour_manual(values = year_colours) + geom_text(data = finch_analysed, aes(x=Year, y= quant, label = cld), size = 5, vjust = -1, hjust = -6)
 finches_results_figure
 
 ```

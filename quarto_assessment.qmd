@@ -106,7 +106,7 @@ From the summary table for the finch_model, it can be seen that only 10.16% of v
 That said, the F-value for the ANOVA is 21, which is greater than 1 and therefore shows a significant difference between mean beak depth in 1976 and in 1978. 
 This is further evidenced by the fact that the confidence intervals outlined in the Tukey test output do not include 0, showing that there is a significant difference in mean between 1976 and 1978.
 
-In 1976, mean beak depth was 9.470mm
+In 1976, mean beak depth was 9.470mm but in 1978 this increased to 10.138mm. This therefore shows that there is a difference in beak depth between 1976 and 1978. 
 
 ```{r}
 

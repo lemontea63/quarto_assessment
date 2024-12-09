@@ -29,11 +29,17 @@ write.csv(case0201, here("data/finches_raw.csv"))
 finches_raw <- read.csv(here("data/finches_raw.csv"))
          
 #Plotting boxplot to see what data looks like...
-finches_exploratory <- ggplot(data = finches_raw, aes(x=Year, y=Depth, group = Year)) + geom_boxplot()
-finches_exploratory
+finches_exploratory_figure <- ggplot(data = finches_raw, aes(x=Year, y=Depth, group = Year)) + geom_boxplot()
+finches_exploratory_figure
 
 ```
 #Methods
+
+```{r Statistical analysis using lm function}
+
+
+
+```
 
 #Results
 

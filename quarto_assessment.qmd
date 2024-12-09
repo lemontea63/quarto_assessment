@@ -1,5 +1,5 @@
 ---
-title: "soya_analysis"
+title: "Quarto Assessment MT24"
 format: html
 editor: visual
 ---
@@ -16,6 +16,7 @@ library(arm)
 library(rmarkdown)
 library(here)
 library(renv)
+library(dplyr)
 ```
 ```{r}
 #Investigating data.
@@ -23,8 +24,14 @@ head(case0201)
 summary(case0201)
 colnames(case0201)
 
+#Preserving raw data as .csv file to keep it safe in event of mutation.
 write.csv(case0201, here("data/finches_raw.csv"))
 finches_raw <- read.csv(here("data/finches_raw.csv"))
+
+
+
+breaks <- as.Date(c("1976", "1978"))
+finches_raw$Year <- cut(finches_raw$Year, breaks, labels (c(1976, 1978)))
 
 #Plotting boxplot to see what data looks like...
 finches_exploratory <- ggplot(data = case0201, aes(x=Year, y= Depth)) + geom_point()

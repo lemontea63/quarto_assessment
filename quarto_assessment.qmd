@@ -1,15 +1,14 @@
 ---
-title: "Reproducible Figures Assignment"
-output:
-  html_document: default
-  pdf_document: default
-date: "2023-11-29"
-purpose: A script to analyse the Palmer Penguins dataset.
+title: "soya_analysis"
+format: html
+editor: visual
 ---
 
 #Introduction
+This analysis aims to assess the impact of drought on beak morphology in the medium ground finch (Geospiza fortis), found in the Galapagos islands. Beak morphology is intricately linked to food availability, with beaks adapting to certain sets of food sources which are available within the niche of a certain species. Freak events like droughts or floods create large selection pressures which act on beak morphology as they impact food availability; these sorts of events may prevent many plant species which are not tolerant to stresses from setting seed, or some plants may even die which will limit food availability in a particular year. To overcome these selection pressures, animals such as birds will evolve to become better adapted to the changed environment, for example by evolving larger, tougher beaks which can take advantage of remaining food sources.
 
 ```{r}
+#Loading packages needed for this analysis.
 library(Sleuth3) 
 library(ggplot2) 
 library(tinytex) 
@@ -18,7 +17,20 @@ library(rmarkdown)
 library(here)
 library(renv)
 ```
+```{r}
+#Investigating data.
+head(case0201)
+summary(case0201)
+colnames(case0201)
 
+write.csv(finches_raw, here("data/finches_raw.csv"))
+finches_raw <- read.csv(here("data/finches_raw.csv"))
+
+#Plotting boxplot to see what data looks like...
+finches_exploratory <- ggplot(data = case0201, aes(x=Year, y= Depth)) + geom_boxplot()
+finches_exploratory
+
+```
 #Methods
 
 #Results

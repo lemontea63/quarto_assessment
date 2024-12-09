@@ -4,7 +4,8 @@ format: html: embed-resources: true
 editor: source
 ---
 
-# Introduction 
+# Introduction
+
 This analysis aims to assess the impact of drought on beak morphology in the medium ground finch (*Geospiza fortis*), found in the Galapagos islands.
 Beak morphology is intricately linked to food availability, with beaks adapting to certain sets of food sources which are available within the niche of a certain species.
 Freak events like droughts or floods create large selection pressures which act on beak morphology as they impact food availability; these sorts of events may prevent many plant species which are not tolerant to stresses from setting seed, or some plants may even die which will limit food availability in a particular year.
@@ -31,7 +32,7 @@ str(case0201)
 summary(case0201)
 colnames(case0201)
 
-#Preserving raw data as .csv file to keep it safe in event of mutation.
+#Preserving raw data as .csv file to keep it safe in event of mutation, and making new data frame which can be modified as necessary.
 write.csv(case0201, here("data/finches_raw.csv"))
 finches_raw <- read.csv(here("data/finches_raw.csv"))
 
@@ -65,7 +66,8 @@ print(finches_exploratory_figure)
 dev.off()
 ```
 
-# Methods 
+# Methods
+
 To analyse the effect of year on beak depth (mm), a one-way ANOVA test will be conducted.
 This is because there are two distinct populations, and there is a continuous response variable and a categorical explanatory variable.
 
@@ -109,7 +111,8 @@ print(finch_analysed)
 means <- aggregate(Depth ~ Year, finches_raw, mean)
 ```
 
-# Results 
+# Results
+
 This one-way ANOVA analysis shows there is a statistically significant difference in mean beak depth between 1976 and 1978.
 In 1976, mean beak depth was 9.470mm but in 1978 the mean increased to 10.138mm.
 
@@ -145,5 +148,6 @@ dev.off()
 
 ```
 
-# Conclusion 
+# Conclusion
+
 In conclusion, it has been shown that there is a difference in the mean beak depth of the medium ground finch between 1976 and 1978, and therefore that drougt can cause beak morphology to evolve in *G. fortis*.

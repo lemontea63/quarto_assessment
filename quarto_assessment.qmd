@@ -27,11 +27,9 @@ colnames(case0201)
 #Preserving raw data as .csv file to keep it safe in event of mutation.
 write.csv(case0201, here("data/finches_raw.csv"))
 finches_raw <- read.csv(here("data/finches_raw.csv"))
-
-factor(finches_raw$Year)
          
 #Plotting boxplot to see what data looks like...
-finches_exploratory <- ggplot(data = finches_raw, aes(x=Year, y=Depth)) + geom_boxplot()
+finches_exploratory <- ggplot(data = finches_raw, aes(x=Year, y=Depth, group = Year)) + geom_boxplot()
 finches_exploratory
 
 ```

@@ -28,13 +28,10 @@ colnames(case0201)
 write.csv(case0201, here("data/finches_raw.csv"))
 finches_raw <- read.csv(here("data/finches_raw.csv"))
 
-
-
-breaks <- as.Date(c("1976", "1978"))
-finches_raw$Year <- cut(finches_raw$Year, breaks, labels (c(1976, 1978)))
-
+finches_grouped <- finches_raw %>% format(finches_raw$Year, format="%Y")
+  
 #Plotting boxplot to see what data looks like...
-finches_exploratory <- ggplot(data = case0201, aes(x=Year, y= Depth)) + geom_point()
+finches_exploratory <- ggplot(data = finches_grouped, aes(x=Year, y=Depth)) + geom_boxplot()
 finches_exploratory
 
 ```

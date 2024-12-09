@@ -17,30 +17,74 @@ library(rmarkdown)
 library(here)
 library(renv)
 library(dplyr)
+library(multcompView)
 ```
 ```{r}
 #Investigating data.
 head(case0201)
+str(case0201)
 summary(case0201)
 colnames(case0201)
 
 #Preserving raw data as .csv file to keep it safe in event of mutation.
 write.csv(case0201, here("data/finches_raw.csv"))
 finches_raw <- read.csv(here("data/finches_raw.csv"))
+
+#Attempting to factorise Year variable.
+finches_raw$Year = as.factor(finches_raw$Year)
+str(finches_raw)
+
+#Histograms to check spread of data- transformations unsuccessful so will simply use untransformed data.
+ggplot(data = finches_raw, aes(x = Depth)) + geom_histogram()
+log_depth <- log10(finches_raw$Depth)
+ggplot(data = finches_raw, aes(x = log_depth)) + geom_histogram()
+sqrt_depth <- sqrt(finches_raw$Depth)
+ggplot(data = finches_raw, aes(x = sqrt_depth)) + geom_histogram()
          
-#Plotting boxplot to see what data looks like...
-finches_exploratory_figure <- ggplot(data = finches_raw, aes(x=Year, y=Depth, group = Year)) + geom_boxplot()
+#Plotting boxplot to see what data look like...
+finches_exploratory_figure <- ggplot(data = finches_raw, aes(x=Year, y=Depth, group = Year)) + geom_boxplot(aes(color = Year)) + geom_jitter(aes(color = Year), alpha = 0.3, position = position_jitter(width = 0.2, seed=0)) + labs (x= "Year", y = "Depth (cm)")
 finches_exploratory_figure
 
 ```
 #Methods
+To analyse the difference in beak depth between 1976 and 1978, an ANOVA test will be conducted. This is because there are two distinct populations, and there is a continuous response variable and a categorical explanatory variable. 
+
+The null hypothesis is that the mean difference in beak depth between years is equal to 0.
+
+The alternative hypothesis is that the mean difference in beak depth between years is not equal to 0.
 
 ```{r Statistical analysis using lm function}
+
+finches_model <- lm(Depth ~ Year, data = finches_raw)
+plot(finches_model, which=2)
+plot(finches_model, which=1)
+
+summary(finches_model)
+
+finch_anova <- aov(finches_model)
+summary(finch_anova)
+finch_tukey <- TukeyHSD(finch_anova)
+print(finch_tukey)
+
+finch_cld <- multcompLetters4(finch_anova, finch_tukey)
+print(finch_cld)
+
+finch_analysed <- group_by(finches_raw, Year) %>% 
+  summarise(mean = mean(Depth), quant = quantile(Depth, probs = 0.75)) %>% 
+  arrange(desc(mean))
+
+finch_cld <- as.data.frame.list(finch_cld$Year)
+finch_analysed$cld <- finch_cld$Letters
+
+print(finch_analysed)
+```
+
+#Results
+
+```{r}
 
 
 
 ```
-
-#Results
 
 #Conclusion

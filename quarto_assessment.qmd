@@ -4,9 +4,11 @@ format: html: embed-resources: true
 editor: source
 ---
 
-#Introduction
-This analysis aims to assess the impact of drought on beak morphology in the medium ground finch (Geospiza fortis), found in the Galapagos islands. 
-Beak morphology is intricately linked to food availability, with beaks adapting to certain sets of food sources which are available within the niche of a certain species. Freak events like droughts or floods create large selection pressures which act on beak morphology as they impact food availability; these sorts of events may prevent many plant species which are not tolerant to stresses from setting seed, or some plants may even die which will limit food availability in a particular year. To overcome these selection pressures, animals such as birds will evolve to become better adapted to the changed environment, for example by evolving larger, tougher beaks which can take advantage of remaining food sources.
+# Introduction 
+This analysis aims to assess the impact of drought on beak morphology in the medium ground finch (*Geospiza fortis*), found in the Galapagos islands.
+Beak morphology is intricately linked to food availability, with beaks adapting to certain sets of food sources which are available within the niche of a certain species.
+Freak events like droughts or floods create large selection pressures which act on beak morphology as they impact food availability; these sorts of events may prevent many plant species which are not tolerant to stresses from setting seed, or some plants may even die which will limit food availability in a particular year.
+To overcome these selection pressures, animals such as birds will evolve to become better adapted to the changed environment, for example by evolving larger, tougher beaks which can take advantage of remaining food sources.
 
 ```{r}
 #Loading packages needed for this analysis.
@@ -21,6 +23,7 @@ library(dplyr)
 library(multcompView)
 library(ragg)
 ```
+
 ```{r}
 #Investigating data.
 head(case0201)
@@ -61,8 +64,10 @@ agg_png("figures/finches_exploratory_figure.png",
 print(finches_exploratory_figure)
 dev.off()
 ```
-#Methods
-To analyse the effect of year on beak depth (mm), a one-way ANOVA test will be conducted. This is because there are two distinct populations, and there is a continuous response variable and a categorical explanatory variable. 
+
+# Methods 
+To analyse the effect of year on beak depth (mm), a one-way ANOVA test will be conducted.
+This is because there are two distinct populations, and there is a continuous response variable and a categorical explanatory variable.
 
 The null hypothesis is that the difference in mean beak depth between years is equal to 0.
 
@@ -104,20 +109,23 @@ print(finch_analysed)
 means <- aggregate(Depth ~ Year, finches_raw, mean)
 ```
 
-#Results
+# Results 
 This one-way ANOVA analysis shows there is a statistically significant difference in mean beak depth between 1976 and 1978.
 In 1976, mean beak depth was 9.470mm but in 1978 the mean increased to 10.138mm.
 
-From the summary table for the finch_model, only 10.16% of variation in beak depth is explained by year (adjusted R-squared = 0.1016). This is surprising as it was expected that the year would play a large role in explaining variation in beak depth, and suggests there may be other factors influencing this. 
-That said, the F-value for the ANOVA is 21, which is greater than 1 and therefore shows a significant difference between mean beak depth in 1976 and in 1978. The p-value for this analysis was 8.65*10^-6. 
+From the summary table for the finch_model, only 10.16% of variation in beak depth is explained by year (adjusted R-squared = 0.1016).
+This is surprising as it was expected that the year would play a large role in explaining variation in beak depth, and suggests there may be other factors influencing this.
+That said, the F-value for the ANOVA is 21, which is greater than 1 and therefore shows a significant difference between mean beak depth in 1976 and in 1978.
+The p-value for this analysis was 8.65\*10\^-6.
 
-The Tukey analysis showed the mean value of beak depth (mm) differed between 1976 and 1978 by 0.669mm. The p-value is 8.6*10^-6, the 95% CI is 0.381 to 0.956mm difference. As this 95% CI does not include 0, this shows there is a significant difference between groups.
+The Tukey analysis showed the mean value of beak depth (mm) differed between 1976 and 1978 by 0.669mm.
+The p-value is 8.6\*10\^-6, the 95% CI is 0.381 to 0.956mm difference.
+As this 95% CI does not include 0, this shows there is a significant difference between groups.
 
 On the boxplot showing the results of this analysis, the median of each group is represented by the bar across the box; the mean of each group is represented by the dark blue dot.
-The significant difference between the mean beak depths in each year is shown on the results boxplot, with the compact letter display showing a difference between years. On the graph, there are two groups, a and b, which correspond to 1976 (b) and 1978 (a).
+The significant difference between the mean beak depths in each year is shown on the results boxplot, with the compact letter display showing a difference between years.
+On the graph, there are two groups, a and b, which correspond to 1976 (b) and 1978 (a).
 This means the null hypothesis that there is no difference in mean beak depth between years can be rejected.
-
-
 
 ```{r}
 
@@ -136,5 +144,6 @@ print(finches_results_figure)
 dev.off()
 
 ```
-#Conclusion
-In conclusion, it has been shown that there is a difference in the mean beak depth of the medium ground finch between 1976 and 1978, and therefore that drougt can cause beak morphology to evolve in G. fortis. 
+
+# Conclusion 
+In conclusion, it has been shown that there is a difference in the mean beak depth of the medium ground finch between 1976 and 1978, and therefore that drougt can cause beak morphology to evolve in *G. fortis*.

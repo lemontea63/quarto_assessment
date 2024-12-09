@@ -46,7 +46,7 @@ ggplot(data = finches_raw, aes(x = sqrt_depth)) + geom_histogram()
 year_colours <- c("1976" = "magenta2", "1978" = "darkorange")
          
 #Plotting exploratory boxplot to see what data look like.
-finches_exploratory_figure <- ggplot(data = finches_raw, aes(x=Year, y=Depth, group = Year)) + geom_boxplot(aes(color = Year)) + geom_jitter(aes(color = Year), alpha = 0.3, position = position_jitter(width = 0.2, seed=0)) + labs (x= "Year", y = "Depth (mm)") + scale_colour_manual(values = year_colours)
+finches_exploratory_figure <- ggplot(data = finches_raw, aes(x=Year, y=Depth, group = Year)) + geom_boxplot(aes(color = Year)) + geom_jitter(aes(color = Year), alpha = 0.3, position = position_jitter(width = 0.2, seed=0)) + labs (x= "Year", y = "Beak depth (mm)") + scale_colour_manual(values = year_colours)
 finches_exploratory_figure
 
 #Saving exploratory figure to figures folder.
@@ -63,7 +63,7 @@ dev.off()
 #Methods
 To analyse the difference in beak depth between 1976 and 1978, an ANOVA test will be conducted. This is because there are two distinct populations, and there is a continuous response variable and a categorical explanatory variable. 
 
-The null hypothesis is that the mean difference in beak depth between years is equal to 0.
+The null hypothesis is that the difference in mean beak depth between years is equal to 0.
 
 The alternative hypothesis is that the mean difference in beak depth between years is not equal to 0.
 
@@ -105,13 +105,13 @@ print(finch_analysed)
 From the summary table for the finch_model, it can be seen that only 10.16% of variation in beak depth is explained by year. This is surprising as it was expected that the year would play a large role in explaining variation in beak depth, and suggests there may be other factors influencing this. 
 That said, the F-value for the ANOVA is 21, which is greater than 1 and therefore shows a significant difference between mean beak depth in 1976 and in 1978. 
 This is further evidenced by the fact that the confidence intervals outlined in the Tukey test output do not include 0, showing that there is a significant difference in mean between 1976 and 1978.
-
-In 1976, mean beak depth was 9.470mm but in 1978 this increased to 10.138mm. This therefore shows that there is a difference in beak depth between 1976 and 1978. 
+The significant difference between the mean beak depths in each year is shown on the results boxplot, with the compact letter display showing a difference between years. On the graph, there are two groups, a and b, which correspond to 1976 (b) and 1978 (a).
+This means the null hypothesis that there is no difference in mean beak depth between years can be rejected. 
 
 ```{r}
 
 #Plotting results figure incorporating compacct letter display gained from analysis.
-finches_results_figure <- ggplot(data = finches_raw, aes(x=Year, y=Depth, group = Year)) + geom_boxplot(aes(color = Year)) + geom_jitter(aes(color = Year), alpha = 0.3, position = position_jitter(width = 0.2, seed=0)) + labs (x= "Year", y = "Depth (mm)") + scale_colour_manual(values = year_colours) + geom_text(data = finch_analysed, aes(x=Year, y= quant, label = cld), size = 5, vjust = -1, hjust = -6)
+finches_results_figure <- ggplot(data = finches_raw, aes(x=Year, y=Depth, group = Year)) + geom_boxplot(aes(color = Year)) + geom_jitter(aes(color = Year), alpha = 0.3, position = position_jitter(width = 0.2, seed=0)) + labs (x= "Year", y = "Beak depth (mm)") + scale_colour_manual(values = year_colours) + geom_text(data = finch_analysed, aes(x=Year, y= quant, label = cld), size = 5, vjust = -1, hjust = -6)
 finches_results_figure
 
 #Saving results figure in figures folder.
@@ -126,4 +126,4 @@ dev.off()
 
 ```
 #Conclusion
-In conclusion, it has been shown that there is a difference in the mean beak depth of the medium ground finch between 1976 and 1978. 
+In conclusion, it has been shown that there is a difference in the mean beak depth of the medium ground finch between 1976 and 1978, and therefore that drougt can cause beak morphology to evolve in G. fortis. In 1976, mean beak depth was 9.470mm but in 1978 the mean increased to 10.138mm. Conducting an ANOVA analysis to assess whether there is a significant difference between years found there was a significant difference in beak depth between 1976 and 1978. 

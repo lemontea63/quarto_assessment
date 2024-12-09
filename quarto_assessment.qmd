@@ -1,3 +1,14 @@
+---
+title: "Reproducible Figures Assignment"
+output:
+  html_document: default
+  pdf_document: default
+date: "2023-11-29"
+purpose: A script to analyse the Palmer Penguins dataset.
+---
+
+#Introduction
+
 ```{r}
 library(Sleuth3) 
 library(ggplot2) 
@@ -7,3 +18,9 @@ library(rmarkdown)
 library(here)
 library(renv)
 ```
+
+#Methods
+
+#Results
+
+#Conclusion

@@ -18,6 +18,7 @@ library(here)
 library(renv)
 library(dplyr)
 library(multcompView)
+library(ragg)
 ```
 ```{r}
 #Investigating data.
@@ -30,7 +31,7 @@ colnames(case0201)
 write.csv(case0201, here("data/finches_raw.csv"))
 finches_raw <- read.csv(here("data/finches_raw.csv"))
 
-#Attempting to factorise Year variable.
+#Factorising "Year" variable.
 finches_raw$Year = as.factor(finches_raw$Year)
 str(finches_raw)
 
@@ -44,10 +45,20 @@ ggplot(data = finches_raw, aes(x = sqrt_depth)) + geom_histogram()
 #Setting own colours for each year.
 year_colours <- c("1976" = "magenta2", "1978" = "darkorange")
          
-#Plotting boxplot to see what data look like...
+#Plotting exploratory boxplot to see what data look like.
 finches_exploratory_figure <- ggplot(data = finches_raw, aes(x=Year, y=Depth, group = Year)) + geom_boxplot(aes(color = Year)) + geom_jitter(aes(color = Year), alpha = 0.3, position = position_jitter(width = 0.2, seed=0)) + labs (x= "Year", y = "Depth (cm)") + scale_colour_manual(values = year_colours)
 finches_exploratory_figure
 
+#Saving exploratory figure.
+agg_png("figures/finches_exploratory_figure.png", 
+        width = 25,
+        height = 15,
+        units = "cm",
+        res = 300,
+        scaling = 1.125)
+
+print(finches_exploratory_figure)
+dev.off()
 ```
 #Methods
 To analyse the difference in beak depth between 1976 and 1978, an ANOVA test will be conducted. This is because there are two distinct populations, and there is a continuous response variable and a categorical explanatory variable. 
@@ -88,6 +99,15 @@ print(finch_analysed)
 
 finches_results_figure <- ggplot(data = finches_raw, aes(x=Year, y=Depth, group = Year)) + geom_boxplot(aes(color = Year)) + geom_jitter(aes(color = Year), alpha = 0.3, position = position_jitter(width = 0.2, seed=0)) + labs (x= "Year", y = "Depth (cm)") + scale_colour_manual(values = year_colours) + geom_text(data = finch_analysed, aes(x=Year, y= quant, label = cld), size = 5, vjust = -1, hjust = -6)
 finches_results_figure
+
+agg_png("figures/finches_results_figure.png", 
+        width = 25,
+        height = 15,
+        units = "cm",
+        res = 300,
+        scaling = 1.125)
+print(finches_results_figure)
+dev.off()
 
 ```
 

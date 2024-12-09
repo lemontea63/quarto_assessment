@@ -83,7 +83,8 @@ print(finch_analysed)
 
 ```{r}
 
-
+finches_results_figure <- ggplot(data = finches_raw, aes(x=Year, y=Depth, group = Year)) + geom_boxplot(aes(color = Year)) + geom_jitter(aes(color = Year), alpha = 0.3, position = position_jitter(width = 0.2, seed=0)) + labs (x= "Year", y = "Depth (cm)") + geom_text(data = finch_analysed, aes(x=Year, y= quant, label = cld), size = 5, vjust = -1, hjust = -6)
+finches_results_figure
 
 ```
 

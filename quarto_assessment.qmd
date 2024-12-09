@@ -1,7 +1,7 @@
 ---
 title: "Quarto Assessment MT24"
-format: html
-editor: visual
+format: html: embed-resources: true
+editor: source
 ---
 
 #Introduction
@@ -61,7 +61,7 @@ print(finches_exploratory_figure)
 dev.off()
 ```
 #Methods
-To analyse the difference in beak depth between 1976 and 1978, an ANOVA test will be conducted. This is because there are two distinct populations, and there is a continuous response variable and a categorical explanatory variable. 
+To analyse the effect of year on beak depth (mm), a one-way ANOVA test will be conducted. This is because there are two distinct populations, and there is a continuous response variable and a categorical explanatory variable. 
 
 The null hypothesis is that the difference in mean beak depth between years is equal to 0.
 
@@ -78,11 +78,11 @@ plot(finches_model, which=1)
 
 summary(finches_model)
 
-#Conducting ANOVA on model to establish if there is a significant effect of year on beak depth.
+#Conducting ANOVA on model to establish if there is a significant effect of year on beak depth. Produces anova table.
 finch_anova <- aov(finches_model)
 summary(finch_anova)
 
-#Conducting Tukey test to ascertain which groups are different (this is already known but necessary foir subsequent code)
+#Conducting Tukey test to ascertain which groups are different (this is already known but necessary for subsequent code). This produces a Tukey post-hoc multiple comparisons table.
 finch_tukey <- TukeyHSD(finch_anova)
 print(finch_tukey)
 
@@ -90,7 +90,7 @@ print(finch_tukey)
 finch_cld <- multcompLetters4(finch_anova, finch_tukey)
 print(finch_cld)
 
-#Creating new table containing information on mean beak depth each year, the 3rd quantile of each group and what compact letter each group belongs to.
+#Creating new table containing information on mean beak depth in each year, the 3rd quantile of each group and what compact letter each group belongs to.
 finch_analysed <- group_by(finches_raw, Year) %>% 
   summarise(mean = mean(Depth), quant = quantile(Depth, probs = 0.75)) %>% 
   arrange(desc(mean))
@@ -104,11 +104,13 @@ means <- aggregate(Depth ~ Year, finches_raw, mean)
 ```
 
 #Results
-This analysis shows there is a sinificant difference in mean beak depth between 1976 and 1978.
-In 1976, mean beak depth was 9.470mm but in 1978 the mean increased to 10.138mm. Conducting an ANOVA analysis to assess whether there is a significant difference between years found there was a significant difference in beak depth between 1976 and 1978. 
-From the summary table for the finch_model, it can be seen that only 10.16% of variation in beak depth is explained by year. This is surprising as it was expected that the year would play a large role in explaining variation in beak depth, and suggests there may be other factors influencing this. 
-That said, the F-value for the ANOVA is 21, which is greater than 1 and therefore shows a significant difference between mean beak depth in 1976 and in 1978. 
-This is further evidenced by the fact that the confidence intervals outlined in the Tukey test output do not include 0, showing that there is a significant difference in mean between 1976 and 1978.
+This one-way ANOVA analysis shows there is a statistically significant difference in mean beak depth between 1976 and 1978.
+In 1976, mean beak depth was 9.470mm but in 1978 the mean increased to 10.138mm.
+
+From the summary table for the finch_model, it can be seen that only 10.16% of variation in beak depth is explained by year (adjusted R-squared = 0.1016). This is surprising as it was expected that the year would play a large role in explaining variation in beak depth, and suggests there may be other factors influencing this. 
+That said, the F-value for the ANOVA is 21, which is greater than 1 and therefore shows a significant difference between mean beak depth in 1976 and in 1978. The p-value for this analysis was 8.65*10^-6. 
+
+The Tukey analysis showed the mean value of beak depth (mm) differed between 1976 and 1978 by 0.669mm. The p-value is 8.6*10^-6, the 95% CI is 0.381 to 0.956mm difference. As this 95% CI does not include 0, this shows there is a significant difference between groups.
 
 On the boxplot showing the results of this analsis, the median of each group is represented by the bar across the box; the mean of eac group is represented by the dark blue dot.
 The significant difference between the mean beak depths in each year is shown on the results boxplot, with the compact letter display showing a difference between years. On the graph, there are two groups, a and b, which correspond to 1976 (b) and 1978 (a).

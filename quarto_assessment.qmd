@@ -23,11 +23,11 @@ head(case0201)
 summary(case0201)
 colnames(case0201)
 
-write.csv(finches_raw, here("data/finches_raw.csv"))
+write.csv(case0201, here("data/finches_raw.csv"))
 finches_raw <- read.csv(here("data/finches_raw.csv"))
 
 #Plotting boxplot to see what data looks like...
-finches_exploratory <- ggplot(data = case0201, aes(x=Year, y= Depth)) + geom_boxplot()
+finches_exploratory <- ggplot(data = case0201, aes(x=Year, y= Depth)) + geom_point()
 finches_exploratory
 
 ```

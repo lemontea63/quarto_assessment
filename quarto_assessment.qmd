@@ -1,6 +1,8 @@
 ---
 title: "Quarto Assessment MT24"
-format: html: embed-resources: true
+format: 
+  html: 
+    embed-resources: true
 editor: source
 ---
 
@@ -13,7 +15,7 @@ In 1977, Daphne Major (an island in the Galapagos archipelago, off the coast of 
 Data collected on beak depth in *G. fortis* suggest that there are differences in beak depth before and after the drought, suggesting that this species evolved in response to selection pressures imposed by the drought, allowing them to take advantage of a limited food supply (in this case only large, tough seeds were available) (Boag & Grant, 1981).
 This analysis will examine these data to assess whether beak depth has significantly changed between 1976 (pre-drought) and 1978 (post-drought), and therefore assess whether there is evidence of the evolution of beak morphology in response to drought.
 
-```{r}
+```{r Loading packages}
 #Loading packages needed for this analysis.
 library(Sleuth3) 
 library(ggplot2) 
@@ -25,9 +27,10 @@ library(renv)
 library(dplyr)
 library(multcompView)
 library(ragg)
+library(patchwork)
 ```
 
-```{r}
+```{r Investigating data}
 #Investigating data.
 head(case0201)
 str(case0201)
@@ -84,8 +87,11 @@ The alternative hypothesis is that the mean difference in beak depth between yea
 finches_model <- lm(Depth ~ Year, data = finches_raw)
 
 #Creating plots to ensure assumptions of one-way ANOVA test are not violated.
-plot(finches_model, which=2)
-plot(finches_model, which=1)
+plot1 <- plot(finches_model, which=2)
+plot2 <- plot(finches_model, which=1)
+
+combined_assumptions_plot <- (plot1 | plot2)
+combined_assumptions_plot
 
 #Running summary of model to assess adjusted R-squared.
 summary(finches_model)
@@ -134,7 +140,7 @@ The significant difference between the mean beak depths in each year is shown on
 On the graph, there are two groups, a and b, which correspond to 1976 (b) and 1978 (a).
 This means the null hypothesis that there is no difference in mean beak depth between years can be rejected.
 
-```{r}
+```{r Plotting results figure}
 
 #Plotting results figure incorporating compact letter display gained from analysis. Code is similar to that for exploratory figure but have added code to show mean of each group and compact letter display for each group on graph.
 finches_results_figure <- ggplot(data = finches_raw, aes(x=Year, y=Depth, group = Year)) + geom_boxplot(aes(color = Year)) + geom_jitter(aes(color = Year), alpha = 0.3, position = position_jitter(width = 0.2, seed=0)) + labs (x= "Year", y = "Beak depth (mm)") + scale_colour_manual(values = year_colours) + stat_summary(fun=mean, colour = "darkblue", geom = "pointrange", shape = 16, size = 0.3, show.legend = FALSE) + geom_text(data = finch_analysed, aes(x=Year, y= quant, label = cld), size = 5, vjust = -1, hjust = -6)

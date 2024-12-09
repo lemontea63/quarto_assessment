@@ -49,7 +49,7 @@ year_colours <- c("1976" = "magenta2", "1978" = "darkorange")
 finches_exploratory_figure <- ggplot(data = finches_raw, aes(x=Year, y=Depth, group = Year)) + geom_boxplot(aes(color = Year)) + geom_jitter(aes(color = Year), alpha = 0.3, position = position_jitter(width = 0.2, seed=0)) + labs (x= "Year", y = "Depth (cm)") + scale_colour_manual(values = year_colours)
 finches_exploratory_figure
 
-#Saving exploratory figure.
+#Saving exploratory figure to figures folder.
 agg_png("figures/finches_exploratory_figure.png", 
         width = 25,
         height = 15,
@@ -69,20 +69,28 @@ The alternative hypothesis is that the mean difference in beak depth between yea
 
 ```{r Statistical analysis using lm function}
 
+#Creating linear model to be used for analysing how year affects beak depth.
 finches_model <- lm(Depth ~ Year, data = finches_raw)
+
+#Creating plots to ensure assumptions of test are not violated.
 plot(finches_model, which=2)
 plot(finches_model, which=1)
 
 summary(finches_model)
 
+#Conducting ANOVA on model to establish if there is a significant effect of year on beak depth.
 finch_anova <- aov(finches_model)
 summary(finch_anova)
+
+#Conducting Tukey test to ascertain which groups are different (this is already known but necessary foir subsequent code)
 finch_tukey <- TukeyHSD(finch_anova)
 print(finch_tukey)
 
+#Creates compact letter display, useful for graphically representing significant differences between groups.
 finch_cld <- multcompLetters4(finch_anova, finch_tukey)
 print(finch_cld)
 
+#Creating new table containing information on mean beak depth each year, the 3rd quantile of each group and what compact letter each group belongs to.
 finch_analysed <- group_by(finches_raw, Year) %>% 
   summarise(mean = mean(Depth), quant = quantile(Depth, probs = 0.75)) %>% 
   arrange(desc(mean))
@@ -97,9 +105,11 @@ print(finch_analysed)
 
 ```{r}
 
+#Plotting results figure incorporating compacct letter display gained from analysis.
 finches_results_figure <- ggplot(data = finches_raw, aes(x=Year, y=Depth, group = Year)) + geom_boxplot(aes(color = Year)) + geom_jitter(aes(color = Year), alpha = 0.3, position = position_jitter(width = 0.2, seed=0)) + labs (x= "Year", y = "Depth (cm)") + scale_colour_manual(values = year_colours) + geom_text(data = finch_analysed, aes(x=Year, y= quant, label = cld), size = 5, vjust = -1, hjust = -6)
 finches_results_figure
 
+#Saving results figure in figures folder.
 agg_png("figures/finches_results_figure.png", 
         width = 25,
         height = 15,

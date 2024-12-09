@@ -47,11 +47,12 @@ ggplot(data = finches_raw, aes(x = log_depth)) + geom_histogram()
 sqrt_depth <- sqrt(finches_raw$Depth)
 ggplot(data = finches_raw, aes(x = sqrt_depth)) + geom_histogram()
 
-#Setting own colours for each year.
+#Setting own colours for each year (ensures colour blind friendly and reproducible).
 year_colours <- c("1976" = "magenta2", "1978" = "darkorange")
          
-#Plotting exploratory boxplot to see what data look like.
+#Plotting exploratory boxplot to see what data look like. Added jitter to show data points, with random seed to ensure jitter is the same every time.
 finches_exploratory_figure <- ggplot(data = finches_raw, aes(x=Year, y=Depth, group = Year)) + geom_boxplot(aes(color = Year)) + geom_jitter(aes(color = Year), alpha = 0.3, position = position_jitter(width = 0.2, seed=0)) + labs (x= "Year", y = "Beak depth (mm)") + scale_colour_manual(values = year_colours)
+
 finches_exploratory_figure
 
 #Saving exploratory figure to figures folder.
@@ -77,20 +78,21 @@ The alternative hypothesis is that the mean difference in beak depth between yea
 
 ```{r Statistical analysis using lm function}
 
-#Creating linear model to be used for analysing how year affects beak depth.
+#Creating linear model to test effect of year on beak depth (mm).
 finches_model <- lm(Depth ~ Year, data = finches_raw)
 
-#Creating plots to ensure assumptions of test are not violated.
+#Creating plots to ensure assumptions of one-way ANOVA test are not violated.
 plot(finches_model, which=2)
 plot(finches_model, which=1)
 
+#Running summary of model to assess adjusted R-squared.
 summary(finches_model)
 
 #Conducting ANOVA on model to establish if there is a significant effect of year on beak depth. Produces anova table.
 finch_anova <- aov(finches_model)
 summary(finch_anova)
 
-#Conducting Tukey test to ascertain which groups are different (this is already known but necessary for subsequent code). This produces a Tukey post-hoc multiple comparisons table.
+#Conducting Tukey test to ascertain which groups are different (this is already known but necessary for subsequent code). Produces Tukey post-hoc multiple comparisons table.
 finch_tukey <- TukeyHSD(finch_anova)
 print(finch_tukey)
 
@@ -132,8 +134,9 @@ This means the null hypothesis that there is no difference in mean beak depth be
 
 ```{r}
 
-#Plotting results figure incorporating compacct letter display gained from analysis.
+#Plotting results figure incorporating compact letter display gained from analysis. Code is similar to that for exploratory figure but have added code to show mean of each group and compact letter display for each group on graph.
 finches_results_figure <- ggplot(data = finches_raw, aes(x=Year, y=Depth, group = Year)) + geom_boxplot(aes(color = Year)) + geom_jitter(aes(color = Year), alpha = 0.3, position = position_jitter(width = 0.2, seed=0)) + labs (x= "Year", y = "Beak depth (mm)") + scale_colour_manual(values = year_colours) + stat_summary(fun=mean, colour = "darkblue", geom = "pointrange", shape = 16, size = 0.3, show.legend = FALSE) + geom_text(data = finch_analysed, aes(x=Year, y= quant, label = cld), size = 5, vjust = -1, hjust = -6)
+
 finches_results_figure
 
 #Saving results figure in figures folder.

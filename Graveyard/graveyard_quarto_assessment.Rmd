@@ -1,0 +1,12 @@
+breaks <- as.Date(c("1976", "1978"))
+finches_raw$Year <- cut(finches_raw$Year, breaks, labels (c(1976, 1978)))
+
+#Making new function to standardise year format.
+cleaning_finch_data <- function(raw_data){
+  raw_data %>% 
+  mutate(Year = as.Date(Year)) %>% 
+  group_by(Year)}
+  
+finches_grouped <- cleaning_finch_data(finches_raw)
+ 
+head(finches_grouped)

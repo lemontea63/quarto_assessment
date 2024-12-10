@@ -169,7 +169,7 @@ Taking all the above into account, this analysis has shown that the null hypothe
  #geom_text allows for addition of compact letter display showing significant difference between 2 groups. 
   #vjust adjusts position of compact letter in y-axis.
   #hjust adjusts position of compact letter in x-axis.
-finches_results_figure <- ggplot(data = finches_raw, aes(x=Year, y=Depth, group = Year)) + geom_boxplot(aes(color = Year)) + labs (x= "Year", y = "Beak depth (mm)") + scale_colour_manual(values = year_colours) + stat_summary(fun=mean, colour = "darkblue", geom = "pointrange", shape = 16, size = 0.3, show.legend = FALSE) + geom_text(data = finch_analysed, aes(x=Year, y=quant,label = cld), size = 5, vjust = -1, hjust = -6)
+finches_results_figure <- ggplot(data = finches_raw, aes(x=Year, y=Depth, group = Year)) + geom_boxplot(aes(color = Year)) + geom_jitter(aes(color = Year), alpha = 0.25, position = position_jitter(width = 0.2, seed=0)) + labs (x= "Year", y = "Beak depth (mm)") + scale_colour_manual(values = year_colours) + stat_summary(fun=mean, colour = "darkblue", geom = "pointrange", shape = 16, size = 0.3, show.legend = FALSE) + geom_text(data = finch_analysed, aes(x=Year, y=quant,label = cld), size = 5, vjust = -1, hjust = -6)
 
 #Creates results figure created by code above, plotting the encoded graph.
 plot(finches_results_figure)

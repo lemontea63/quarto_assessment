@@ -169,10 +169,11 @@ dev.off()
 
 # Conclusion
 
-In conclusion, it has been shown that there is a difference in the mean beak depth of the medium ground finch between 1976 and 1978.
-In 1976, mean beak depth was 9.470mm but in 1978 the mean increased to 10.138mm.
-The results of the one-way ANOVA and Tukey test confirm that there is a statistically significant difference in mean beak depth between 1976 and 1978, coinciding with the 1977 drought.
-This therefore has shown that the 1977 drought caused a change in beak morphology in *G. fortis* in response to selection pressures exerted by drought and changing food availability, reflecting the restriction of food supply to large, tough seeds.
+In conclusion, this analysis has shown that there is a statistically significant difference in the mean beak depth of the medium ground finch between 1976 and 1978, coinciding with the 1977 drought.
+This therefore shows that drought can cause beak morphology to evolve in *G. fortis* in response to selection pressures exerted by changing food availability.
+
+This raises questions over whether other environmental events such as floods can cause similar changes to traits in birds and other animals, as well as how climate change and associated effects may affect evolution of species globally as weather patterns change in response to a warming world.
+Further research can be conducted to assess this.
 
 ## References:
 

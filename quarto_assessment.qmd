@@ -47,31 +47,33 @@ finches_raw <- read.csv(here("data/finches_raw.csv"))
 finches_raw$Year = as.factor(finches_raw$Year)
 str(finches_raw)
 
-#Histograms to check spread of data- transformations unsuccessful so will simply use untransformed data.
+#Histograms to check spread of data- transformations unsuccessful so will use untransformed data.
 ggplot(data = finches_raw, aes(x = Depth)) + geom_histogram()
+
+#Codes for log transformation of Depth data and plots histogram of- can see this transformation made data more left-skewed.
 log_depth <- log10(finches_raw$Depth)
 ggplot(data = finches_raw, aes(x = log_depth)) + geom_histogram()
+
+#Codes for square root transformation of Depth dataand plots histogram of- can see this transformation also made data more left-skewed.
 sqrt_depth <- sqrt(finches_raw$Depth)
 ggplot(data = finches_raw, aes(x = sqrt_depth)) + geom_histogram()
+```
 
-#Setting own colours for each year (ensures colour blind friendly and reproducible).
+```{r Creating exploratory plot}
+#Setting own colours for each year. This ensures document is colour blind friendly, increasing document accessibility, and more reproducible (as this makes sure each year is always represented by the same colour when colour is specified).
 year_colours <- c("1976" = "magenta2", "1978" = "darkorange")
          
-#Plotting exploratory boxplot to see what data look like. Added jitter to show data points, with random seed to ensure jitter is the same every time.
-finches_exploratory_figure <- ggplot(data = finches_raw, aes(x=Year, y=Depth, group = Year)) + geom_boxplot(aes(color = Year)) + geom_jitter(aes(color = Year), alpha = 0.3, position = position_jitter(width = 0.2, seed=0)) + labs (x= "Year", y = "Beak depth (mm)") + scale_colour_manual(values = year_colours)
+#Plotting exploratory boxplot to see what data look like. 
+# Added jitter to artificially spread data points to increase their visibility, with random      seed to ensure jitter is the same every time.
+# geom_jitter() makes data points visible on graph and spreads them out. 
+# alpha specifies transparency of datapoints to ensure they do not hide graph.
+# position_jitter() allows finer control over how much data points are spread by. Seed makes     figure more reproducible by specifying how data points spread in the same way every time.
+# labs() adds own labels to plot. 
+# scale_colour_manual() specifies which colour each group is assigned, based on year_colours      coded above.
+finches_exploratory_figure <- ggplot(data = finches_raw, aes(x=Year,  y=Depth, group = Year)) + geom_boxplot(aes(color = Year)) + geom_jitter(aes(color = Year), alpha = 0.25, position = position_jitter(width = 0.2, seed=0)) + labs (x= "Year", y = "Beak depth (mm)") + scale_colour_manual(values = year_colours) 
 
-finches_exploratory_figure
-
-#Saving exploratory figure to figures folder.
-agg_png("figures/finches_exploratory_figure.png", 
-        width = 25,
-        height = 15,
-        units = "cm",
-        res = 300,
-        scaling = 1.125)
-
-print(finches_exploratory_figure)
-dev.off()
+#Creates results figure created by code above, plotting the encoded graph.
+plot(finches_exploratory_figure)
 ```
 
 # Methods
@@ -91,12 +93,19 @@ The reason the assumption is violated is that because *G. fortis* could not bree
 #Creating linear model to test effect of year on beak depth (mm).
 finches_model <- lm(Depth ~ Year, data = finches_raw)
 
-#Creating plots to ensure assumptions of one-way ANOVA test are not violated.
-plot1 <- plot(finches_model, which=2)
-plot2 <- plot(finches_model, which=1)
+#Checking assumptions of one-way ANOVA test are not violated:
+#Making multi-panel figure to allow assessment of normality and heteroscedascity of model using par function.
+par(mfrow = c(1,2))
 
-combined_assumptions_plot <- (plot1 | plot2)
-combined_assumptions_plot
+#Verifying normal distribution of samples:
+# which=2 specifies QQ plot to compare the data in finches_model to a theoretical normal         dataset, to verify data is normally distributed. As points mostly lie on straight line, can assume this sample is normally distributed.
+plot(finches_model, which=2)
+
+#Verifying assumption of equal variance between populations (i.e between 1976 and 1978), ensuring homoscedasicity.
+# which=1 specifies graph of residual values vs fitted values, to verify population variances are equal between samples.
+plot(finches_model, which=1)
+#Bartlett test also verifies assumption of equal variance, but gives p-value. In this case, p=0.2144 and 0.2144 > 0.05 therefore equal variance between populations and assumption is not violated.
+bartlett.test(Depth ~ Year, data=finches_raw)
 
 #Running summary of model to assess adjusted R-squared.
 summary(finches_model)
@@ -151,20 +160,34 @@ Taking all the above into account, this analysis has shown that the null hypothe
 ```{r Plotting results figure}
 
 #Plotting results figure incorporating compact letter display gained from analysis. Code is similar to that for exploratory figure but have added code to show mean of each group and compact letter display for each group on graph.
-finches_results_figure <- ggplot(data = finches_raw, aes(x=Year, y=Depth, group = Year)) + geom_boxplot(aes(color = Year)) + geom_jitter(aes(color = Year), alpha = 0.3, position = position_jitter(width = 0.2, seed=0)) + labs (x= "Year", y = "Beak depth (mm)") + scale_colour_manual(values = year_colours) + stat_summary(fun=mean, colour = "darkblue", geom = "pointrange", shape = 16, size = 0.3, show.legend = FALSE) + geom_text(data = finch_analysed, aes(x=Year, y= quant, label = cld), size = 5, vjust = -1, hjust = -6)
+finches_results_figure <- ggplot(data = finches_raw, 
+                                 aes(x=Year, 
+                                     y=Depth, 
+                                     group = Year)) +
+  geom_boxplot(aes(color = Year)) + 
+  geom_jitter(aes(color = Year), 
+              alpha = 0.3,
+              position = position_jitter(width = 0.2, 
+                                         seed=0)) + 
+  labs (x= "Year", 
+        y = "Beak depth (mm)") + 
+  scale_colour_manual(values = year_colours) + 
+  stat_summary(fun=mean, 
+               colour = "darkblue", 
+               geom = "pointrange", 
+               shape = 16, 
+               size = 0.3, 
+               show.legend = FALSE) + 
+  geom_text(data = finch_analysed, 
+            aes(x=Year, 
+                y= quant, 
+                label = cld), 
+            size = 5, 
+            vjust = -1, 
+            hjust = -6)
 
-finches_results_figure
-
-#Saving results figure in figures folder.
-agg_png("figures/finches_results_figure.png", 
-        width = 25,
-        height = 15,
-        units = "cm",
-        res = 300,
-        scaling = 1.125)
-print(finches_results_figure)
-dev.off()
-
+#Creates results figure created by code above, plotting the encoded graph.
+plot(finches_results_figure)
 ```
 
 # Conclusion

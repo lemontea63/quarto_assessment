@@ -129,21 +129,24 @@ means <- aggregate(Depth ~ Year, finches_raw, mean)
 # Results
 
 This one-way ANOVA analysis shows there is a statistically significant difference in mean beak depth between 1976 and 1978.
+
 In 1976, mean beak depth was 9.470mm but in 1978 the mean increased to 10.138mm.
+This represents a difference of 0.669mm (95%CI 0.381 to 0.956mm difference).
 
 From the summary table for the finch_model, only 10.16% of variation in beak depth is explained by year (adjusted R-squared = 0.1016).
-This is surprising as it was expected that the year would play a large role in explaining variation in beak depth, and suggests there may be other factors influencing this.
+This is surprising as it was expected that the year would play a large role in explaining variation in beak depth and suggests there may be other factors influencing this.
 That said, the F-value for the ANOVA is 21, which is greater than 1 and therefore shows a significant difference between mean beak depth in 1976 and in 1978.
 The p-value for this analysis was 8.65\*10\^-6.
 
-The Tukey analysis showed the mean value of beak depth (mm) differed between 1976 and 1978 by 0.669mm.
-The p-value is 8.6\*10\^-6, the 95% CI is 0.381 to 0.956mm difference.
-As this 95% CI does not include 0, this shows there is a significant difference between groups.
+The Tukey analysis showed the mean value of beak depth (mm) differed between 1976 and 1978 by 0.669mm (95%CI 0.381 to 0.956mm).
+As this 95% CI does not include 0 (which is what would be expected by the null hypothesis), this shows there is a significant difference between groups.
+The p-value is 8.6\*10\^-6, which is also significant.
 
 On the boxplot showing the results of this analysis, the median of each group is represented by the bar across the box; the mean of each group is represented by the dark blue dot.
 The significant difference between the mean beak depths in each year is shown on the results boxplot, with the compact letter display showing a difference between years.
 On the graph, there are two groups, a and b, which correspond to 1976 (b) and 1978 (a).
-This means the null hypothesis that there is no difference in mean beak depth between years can be rejected.
+
+Taking all the above into account, this analysis has shown that the null hypothesis (that there is no difference in mean beak depth between years) can be rejected.
 
 ```{r Plotting results figure}
 

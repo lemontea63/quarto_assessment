@@ -152,7 +152,7 @@ That said, the F-value for the ANOVA is 21, which is greater than 1 and therefor
 The p-value for this analysis was 8.65\*10\^-6.
 
 The Tukey analysis showed the mean value of beak depth (mm) differed between 1976 and 1978 by 0.669mm (3dp) (95%CI 0.381 to 0.956mm (3dp)).
-As this 95% CI does not include 0 (which is what would be expected by the null hypothesis), this shows there is a significant difference between groups.
+As this 95% confidence intervals do not include 0 (which is what would be expected by the null hypothesis), this shows there is a significant difference between groups.
 The p-value is 8.6\*10\^-6, which is also significant.
 
 On the boxplot showing the results of this analysis, the median of each group is represented by the bar across the box; the mean of each group is represented by the dark blue dot.

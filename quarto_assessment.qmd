@@ -1,8 +1,13 @@
 ---
 title: "Quarto Assessment MT24"
+date: "Michaelmas Term 2024"
+output: html_document
 format: 
   html: 
     embed-resources: true
+    toc: true
+    number_sections: true
+    toc_float: true
 editor: source
 ---
 

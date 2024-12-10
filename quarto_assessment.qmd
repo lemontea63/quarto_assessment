@@ -144,8 +144,7 @@ means <- aggregate(Depth ~ Year, finches_raw, mean)
 
 This one-way ANOVA analysis shows there is a statistically significant difference in mean beak depth between 1976 and 1978.
 
-In 1976, mean beak depth was 9.470mm but in 1978 the mean increased to 10.138mm.
-This represents a difference of 0.669mm (95%CI 0.381 to 0.956mm difference).
+In 1976, mean beak depth was 9.470mm (3dp) but in 1978 the mean increased to 10.138mm (3dp).
 
 From the summary table for the finch_model, only 10.16% of variation in beak depth is explained by year (adjusted R-squared = 0.1016).
 This is surprising as it was expected that the year would play a large role in explaining variation in beak depth and suggests there may be other factors influencing this.

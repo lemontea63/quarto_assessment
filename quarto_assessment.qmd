@@ -8,12 +8,14 @@ editor: source
 
 # Introduction
 
-The aim of this analysis is to assess whether drought has an impact on beak morphology in the medium ground finch, *Geospiza fortis*.
+The aim of this analysis is to assess whether drought has an impact on the evolution of beak morphology in the medium ground finch, *Geospiza fortis*.
+
 Beak morphology is believed to evolve in response to availability of food and preferred food of a species, in part defined by the niche a species occupies and in part by environmental effects altering what foods are available and in what quantity.
 Freak events like droughts can create large selection pressures which act on beak morphology, causing evolution in response to changing food sources.
-In 1977, Daphne Major (an island in the Galapagos archipelago, off the coast of Ecuador) experienced a major drought, severely affecting availability of food.
-Data collected on beak depth in *G. fortis* suggest that there are differences in beak depth before and after the drought, suggesting that this species evolved in response to selection pressures imposed by the drought, allowing them to take advantage of a limited food supply (in this case only large, tough seeds were available) (Boag & Grant, 1981).
-This analysis will examine these data to assess whether beak depth has significantly changed between 1976 (pre-drought) and 1978 (post-drought), and therefore assess whether there is evidence of the evolution of beak morphology in response to drought.
+In 1977, Daphne Major (an island in the Galapagos archipelago, off the coast of Ecuador) experienced a major drought.
+This caused changes to and severely limited the food supply on the island, making it such that only large, tough seeds were available for the birds to eat (Boag and Grant, 1981).
+
+Data were collected on beak depth on *G. fortis* before and after the drought; this analysis will examine these data to assess whether there is evidence of the evolution of beak morphology (using beak depth) in response to drought.
 
 ```{r Loading packages}
 #Loading packages needed for this analysis.
@@ -80,6 +82,9 @@ This is because there are two distinct populations, and there is a continuous re
 The null hypothesis is that the difference in mean beak depth between years is equal to 0.
 
 The alternative hypothesis is that the mean difference in beak depth between years is not equal to 0.
+
+While the assumption of independent samples is violated in this analysis, there is no way to rectify this.
+The reason the assumption is violated is that because *G. fortis* could not breed during the 1977 drought, any finches caught in 1978 would also have been alive in 1976 and may have also been included in data from that year; the data from 1978 is a subset of the data from 1976 as only finches alive in 1976 and which survived the 1977 drought were alive in 1978 (Boag and Grant, 1981).
 
 ```{r Statistical analysis using lm function}
 

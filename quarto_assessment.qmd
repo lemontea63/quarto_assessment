@@ -112,9 +112,11 @@ plot(finches_model, which=1)
 #Bartlett test also verifies assumption of equal variance, but gives p-value. In this case, p=0.2144 and 0.2144 > 0.05 therefore equal variance between populations and assumption is not violated.
 bartlett.test(Depth ~ Year, data=finches_raw)
 
-#Running summary of model to assess adjusted R-squared.
+#Running summary of model to assess adjusted R-squared and generate p-value and F-values..
 summary(finches_model)
+```
 
+```{r ANOVA to generate compact letter display}
 #Conducting ANOVA on model to establish if there is a significant effect of year on beak depth. Produces anova table.
 finch_anova <- aov(finches_model)
 summary(finch_anova)

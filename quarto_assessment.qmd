@@ -22,6 +22,10 @@ This caused changes to and severely limited the food supply on the island, makin
 
 Data were collected on beak depth on *G. fortis* before and after the drought; this analysis will examine these data to assess whether there is evidence of the evolution of beak morphology (using beak depth) in response to drought.
 
+The dataset used in this analysis consists of a random sample of 89 finches caught before the drought, and all 89 finches which survived after the drought, in 1978 (Boag and Grant, 1981).
+
+NB: Analysis presented here os different from that of the referenced paper.
+
 ```{r Loading packages}
 #Loading packages needed for this analysis.
 library(Sleuth3) 
@@ -90,8 +94,7 @@ The null hypothesis is that the difference in mean beak depth between years is e
 
 The alternative hypothesis is that the mean difference in beak depth between years is not equal to 0.
 
-While the assumption of independent samples is violated in this analysis, there is no way to rectify this.
-The reason the assumption is violated is that because *G. fortis* could not breed during the 1977 drought, any finches caught in 1978 would also have been alive in 1976 and may have also been included in data from that year; the data from 1978 is a subset of the data from 1976 as only finches alive in 1976 and which survived the 1977 drought were alive in 1978 (Boag and Grant, 1981).
+The assumption of independent samples is not violated in this analysis, as a random sample is taken in 1976 which is statistically unlikely to include a significant proportion of birds recaptured in 1978 (which would have survived the 1977 drought) (Boag and Grant, 1981). As it is not the same birds represented in both years, the samples are therefore not paired and so can be considered independent for the purpose of this analysis. 
 
 ```{r Statistical analysis using lm function}
 
@@ -103,7 +106,7 @@ finches_model <- lm(Depth ~ Year, data = finches_raw)
 par(mfrow = c(1,2))
 
 #Verifying normal distribution of samples:
-# which=2 specifies QQ plot to compare the data in finches_model to a theoretical normal         dataset, to verify data is normally distributed. As points mostly lie on straight line, can assume this sample is normally distributed.
+# which=2 specifies QQ plot to compare the data in finches_model to a theoretical normal dataset, to verify data is normally distributed. As points mostly lie on straight line, can assume this sample is normally distributed.
 plot(finches_model, which=2)
 
 #Verifying assumption of equal variance between populations (i.e between 1976 and 1978), ensuring homoscedasicity.

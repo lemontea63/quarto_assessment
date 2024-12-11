@@ -3336,7 +3336,7 @@ Attaching package: &#39;patchwork&#39;</code></pre>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>finches_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Depth <span class="sc">~</span> Year, <span class="at">data =</span> finches_raw)</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Checking assumptions of one-way ANOVA test are not violated:</span></span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Making multi-panel figure to allow assessment of normality and heteroscedascity of model using par function.</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Making multi-panel figure to allow assessment of normality and heteroscedascity of model using par() function.</span></span>
 <span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
 <span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Verifying normal distribution of samples:</span></span>
@@ -3362,7 +3362,7 @@ Attaching package: &#39;patchwork&#39;</code></pre>
 data:  Depth by Year
 Bartlett&#39;s K-squared = 1.5412, df = 1, p-value = 0.2144</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Running summary of model to assess adjusted R-squared.</span></span>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Running summary of model to assess adjusted R-squared and generate p-value and F-values..</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(finches_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -3384,6 +3384,8 @@ Residual standard error: 0.973 on 176 degrees of freedom
 Multiple R-squared:  0.1066,    Adjusted R-squared:  0.1016 
 F-statistic: 21.01 on 1 and 176 DF,  p-value: 8.65e-06</code></pre>
 </div>
+</div>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Conducting ANOVA on model to establish if there is a significant effect of year on beak depth. Produces anova table.</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>finch_anova <span class="ot">&lt;-</span> <span class="fu">aov</span>(finches_model)</span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(finch_anova)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -3420,10 +3422,13 @@ $Year
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Depth), <span class="at">quant =</span> <span class="fu">quantile</span>(Depth, <span class="at">probs =</span> <span class="fl">0.75</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(mean))</span>
 <span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>finch_cld <span class="ot">&lt;-</span> <span class="fu">as.data.frame.list</span>(finch_cld<span class="sc">$</span>Year)</span>
-<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>finch_analysed<span class="sc">$</span>cld <span class="ot">&lt;-</span> finch_cld<span class="sc">$</span>Letters</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Makes new dataframe contaiing information on compact letter display of each group.</span></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>finch_cld <span class="ot">&lt;-</span> <span class="fu">as.data.frame.list</span>(finch_cld<span class="sc">$</span>Year)</span>
 <span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(finch_analysed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Makes new column in finch_analysed dataset containing information on compact letter display for each group (1976 or 1978)</span></span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>finch_analysed<span class="sc">$</span>cld <span class="ot">&lt;-</span> finch_cld<span class="sc">$</span>Letters</span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(finch_analysed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   Year   mean quant cld  
@@ -3431,7 +3436,14 @@ $Year
 1 1978  10.1   10.7 a    
 2 1976   9.47  10.2 b    </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(Depth <span class="sc">~</span> Year, finches_raw, mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Shows us what mean values of each group are.</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(Depth <span class="sc">~</span> Year, finches_raw, mean)</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>means</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Year     Depth
+1 1976  9.469663
+2 1978 10.138202</code></pre>
+</div>
 </div>
 </section>
 <section id="results" class="level1">
@@ -3443,15 +3455,15 @@ $Year
 <p>On the boxplot showing the results of this analysis, the median of each group is represented by the bar across the box; the mean of each group is represented by the dark blue dot. The significant difference between the mean beak depths in each year is shown on the results boxplot, with the compact letter display showing a difference between years. On the graph, there are two groups, a and b, which correspond to 1976 (b) and 1978 (a).</p>
 <p>Taking all the above into account, this analysis has shown that the null hypothesis (that there is no difference in mean beak depth between years) can be rejected.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting results figure incorporating compact letter display gained from analysis. Code is similar to that for exploratory figure but have added code to show mean of each group and compact letter display for each group on graph. Raw data is not shown on this figure as this is an explanatory figure showing the result of the one-way ANOVA conducted.</span></span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a> <span class="co">#stat_summary() allows for plotting of mean on the graph.</span></span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a> <span class="co">#geom_text allows for addition of compact letter display showing significant difference between 2 groups. </span></span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">#vjust adjusts position of compact letter in y-axis.</span></span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">#hjust adjusts position of compact letter in x-axis.</span></span>
-<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>finches_results_figure <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> finches_raw, <span class="fu">aes</span>(<span class="at">x=</span>Year, <span class="at">y=</span>Depth, <span class="at">group =</span> Year)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">color =</span> Year)) <span class="sc">+</span> <span class="fu">geom_jitter</span>(<span class="fu">aes</span>(<span class="at">color =</span> Year), <span class="at">alpha =</span> <span class="fl">0.25</span>, <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">seed=</span><span class="dv">0</span>)) <span class="sc">+</span> <span class="fu">labs</span> (<span class="at">x=</span> <span class="st">&quot;Year&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Beak depth (mm)&quot;</span>) <span class="sc">+</span> <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> year_colours) <span class="sc">+</span> <span class="fu">stat_summary</span>(<span class="at">fun=</span>mean, <span class="at">colour =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="at">geom =</span> <span class="st">&quot;pointrange&quot;</span>, <span class="at">shape =</span> <span class="dv">16</span>, <span class="at">size =</span> <span class="fl">0.3</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="fu">geom_text</span>(<span class="at">data =</span> finch_analysed, <span class="fu">aes</span>(<span class="at">x=</span>Year, <span class="at">y=</span>quant,<span class="at">label =</span> cld), <span class="at">size =</span> <span class="dv">5</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">hjust =</span> <span class="sc">-</span><span class="dv">6</span>)</span>
-<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Creates results figure created by code above, plotting the encoded graph.</span></span>
-<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(finches_results_figure)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting results figure incorporating compact letter display gained from analysis. Code is similar to that for exploratory figure but have added code to show mean of each group and compact letter display for each group on graph. Raw data is not shown on this figure as this is an explanatory figure showing the result of the one-way ANOVA conducted.</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a> <span class="co">#stat_summary() allows for plotting of mean on the graph.</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a> <span class="co">#geom_text allows for addition of compact letter display showing significant difference between 2 groups. </span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">#vjust adjusts position of compact letter in y-axis.</span></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">#hjust adjusts position of compact letter in x-axis.</span></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>finches_results_figure <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> finches_raw, <span class="fu">aes</span>(<span class="at">x=</span>Year, <span class="at">y=</span>Depth, <span class="at">group =</span> Year)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">color =</span> Year)) <span class="sc">+</span> <span class="fu">geom_jitter</span>(<span class="fu">aes</span>(<span class="at">color =</span> Year), <span class="at">alpha =</span> <span class="fl">0.25</span>, <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">seed=</span><span class="dv">0</span>)) <span class="sc">+</span> <span class="fu">labs</span> (<span class="at">x=</span> <span class="st">&quot;Year&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Beak depth (mm)&quot;</span>) <span class="sc">+</span> <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> year_colours) <span class="sc">+</span> <span class="fu">stat_summary</span>(<span class="at">fun=</span>mean, <span class="at">colour =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="at">geom =</span> <span class="st">&quot;pointrange&quot;</span>, <span class="at">shape =</span> <span class="dv">16</span>, <span class="at">size =</span> <span class="fl">0.3</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="fu">geom_text</span>(<span class="at">data =</span> finch_analysed, <span class="fu">aes</span>(<span class="at">x=</span>Year, <span class="at">y=</span>quant,<span class="at">label =</span> cld), <span class="at">size =</span> <span class="dv">5</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">hjust =</span> <span class="sc">-</span><span class="dv">6</span>)</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Creates results figure created by code above, plotting the encoded graph.</span></span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(finches_results_figure)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
 (`geom_segment()`).</code></pre>

@@ -116,7 +116,7 @@ bartlett.test(Depth ~ Year, data=finches_raw)
 summary(finches_model)
 ```
 
-```{r ANOVA to generate compact letter display}
+```{r ANOVA using lm() function to generate compact letter display}
 #Conducting ANOVA on model to establish if there is a significant effect of year on beak depth. Produces anova table.
 finch_anova <- aov(finches_model)
 summary(finch_anova)
@@ -134,12 +134,17 @@ finch_analysed <- group_by(finches_raw, Year) %>%
   summarise(mean = mean(Depth), quant = quantile(Depth, probs = 0.75)) %>% 
   arrange(desc(mean))
 
+#Makes new dataframe contaiing information on compact letter display of each group.
 finch_cld <- as.data.frame.list(finch_cld$Year)
+
+#Makes new column in finch_analysed dataset containing information on compact letter display for each group (1976 or 1978)
 finch_analysed$cld <- finch_cld$Letters
 
 print(finch_analysed)
 
+#Shows us what mean values of each group are.
 means <- aggregate(Depth ~ Year, finches_raw, mean)
+means
 ```
 
 # Results

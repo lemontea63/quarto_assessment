@@ -3128,7 +3128,6 @@ vertical-align: -.125em;
 <p>Beak morphology is believed to evolve in response to availability of food and preferred food of a species, in part defined by the niche a species occupies and in part by environmental effects altering what foods are available and in what quantity. Freak events like droughts can create large selection pressures which act on beak morphology, causing evolution in response to changing food sources. In 1977, Daphne Major (an island in the Galapagos archipelago, off the coast of Ecuador) experienced a major drought. This caused changes to and severely limited the food supply on the island, making it such that only large, tough seeds were available for the birds to eat (Boag and Grant, 1981).</p>
 <p>Data were collected on beak depth on <em>G. fortis</em> before and after the drought; this analysis will examine these data to assess whether there is evidence of the evolution of beak morphology (using beak depth) in response to drought.</p>
 <p>The dataset used in this analysis consists of a random sample of 89 finches caught before the drought, and all 89 finches which survived after the drought, in 1978 (Boag and Grant, 1981).</p>
-<p>NB: Analysis presented here os different from that of the referenced paper.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Loading packages needed for this analysis.</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Sleuth3) </span>
@@ -3333,6 +3332,7 @@ Attaching package: &#39;patchwork&#39;</code></pre>
 <p>The null hypothesis is that the difference in mean beak depth between years is equal to 0.</p>
 <p>The alternative hypothesis is that the mean difference in beak depth between years is not equal to 0.</p>
 <p>The assumption of independent samples is not violated in this analysis, as a random sample is taken in 1976 which is statistically unlikely to include a significant proportion of birds recaptured in 1978 (which would have survived the 1977 drought) (Boag and Grant, 1981). As it is not the same birds represented in both years, the samples are therefore not paired and so can be considered independent for the purpose of this analysis.</p>
+<p>NB: Analysis presented here is different from that of the referenced paper.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating linear model to test effect of year on beak depth (mm).</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>finches_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Depth <span class="sc">~</span> Year, <span class="at">data =</span> finches_raw)</span>

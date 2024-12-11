@@ -99,7 +99,7 @@ The reason the assumption is violated is that because *G. fortis* could not bree
 finches_model <- lm(Depth ~ Year, data = finches_raw)
 
 #Checking assumptions of one-way ANOVA test are not violated:
-#Making multi-panel figure to allow assessment of normality and heteroscedascity of model using par function.
+#Making multi-panel figure to allow assessment of normality and heteroscedascity of model using par() function.
 par(mfrow = c(1,2))
 
 #Verifying normal distribution of samples:

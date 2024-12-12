@@ -1,6 +1,6 @@
 ---
 title: "Quarto Assessment MT24"
-date: "Michaelmas Term 2024"
+date: "2024-12-13"
 output: html_document
 format: 
   html: 
@@ -85,7 +85,7 @@ plot(finches_exploratory_figure)
 
 # Methods
 
-To analyse the effect of year on beak depth (mm), a one-way ANOVA test will be conducted.
+To analyse how mean beak depth (mm) changes between 1976 and 1978, a one-way ANOVA test will be conducted.
 This is because there are two distinct populations, and there is a continuous response variable and a categorical explanatory variable.
 
 The null hypothesis is that the difference in mean beak depth between years is equal to 0.

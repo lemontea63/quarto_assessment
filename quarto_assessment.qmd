@@ -189,8 +189,7 @@ plot(finches_results_figure)
 In conclusion, this analysis has shown that there is a statistically significant difference in the mean beak depth of the medium ground finch between 1976 and 1978, coinciding with the 1977 drought.
 This therefore shows that drought can cause beak morphology to evolve in *G. fortis* in response to selection pressures exerted by changing food availability.
 
-This raises questions over whether other environmental events such as floods can cause similar changes to traits in birds and other animals, as well as how climate change and associated effects may affect evolution of species globally as weather patterns change in response to a warming world.
-Further research can be conducted to assess this.
+This raises questions over whether other environmental events such as floods can cause similar changes to traits in birds and other animals, as well as how climate change and associated effects may affect evolution of species globally as weather patterns change in response to a warming world; further research can be conducted to assess this. It would also be interesting to see whether as more diverse food sources became available again, whether mean beak depth evolved to return to a similar distribution to that seen in 1976, or whether mean beak depth remained larger than it was before the drought.
 
 ## References:
 
